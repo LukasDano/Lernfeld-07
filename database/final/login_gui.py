@@ -27,6 +27,27 @@ def login():
         subprocess.run(["python3", "file2.py", str(user_id)])
     else:
         messagebox.showerror("Fehler", "Falscher Benutzername oder Passwort")
+
+def dev_login():
+    username = "user"
+    password = "user"
+    home_dir = os.path.expanduser("~")
+    db_path = os.path.join(home_dir, DATENBANK)
+    conn = sqlite3.connect(db_path)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+    user = cursor.fetchone()
+
+    if user:
+        global user_id
+        user_id = user[0]
+        # show_user_data(user_id)
+        root.destroy()
+        subprocess.run(["python3", "file2.py", str(user_id)])
+    else:
+        messagebox.showerror("Fehler", "Falscher Benutzername oder Passwort")
  
 # Funktion zum Schließen der Anwendung
 def close_app():
@@ -59,6 +80,10 @@ if __name__ == "__main__":
     entry_password = tk.Entry(root, show="*")
     entry_password.pack(pady=5)
      
+    # Login-Button
+    button_login = tk.Button(root, text="DEV", command=dev_login)
+    button_login.pack(pady=20)
+
     # Login-Button
     button_login = tk.Button(root, text="Anmelden", command=login)
     button_login.pack(pady=20)
