@@ -3,9 +3,9 @@ from tkinter import messagebox
 import sqlite3
 import os
 import subprocess
-import config
 
 DATENBANK= 'dbFinal.db'
+user_id = ""
 
 def login():
     username = entry_username.get()
@@ -20,10 +20,11 @@ def login():
     user = cursor.fetchone()
  
     if user:
-        config.user_id = user[0]
+        global user_id
+        user_id = user[0]
         #show_user_data(user_id)
         root.destroy()
-        subprocess.run(["python3", "data_view.py"]) 
+        subprocess.run(["python3", "file2.py", str(user_id)])
     else:
         messagebox.showerror("Fehler", "Falscher Benutzername oder Passwort")
  

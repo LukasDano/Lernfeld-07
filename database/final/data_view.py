@@ -3,10 +3,17 @@ from tkinter import messagebox
 import sqlite3
 import os
 import login_gui
-import config
+import sys
+
+# Get user_id from command-line arguments
+if len(sys.argv) > 1:
+    user_id = int(sys.argv[1])  # Convert the argument to an integer
+else:
+    user_id = 1  # Default value or error handling if needed
+
 
 start_index = 0
-user_id = config.user_id
+
 
 def show_user_data(user_id):
     global start_index
